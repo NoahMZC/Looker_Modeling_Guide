@@ -79,9 +79,9 @@ view: subway_dataset {
     sql: 1;;
     html:
           {% if subway_line_code <= "'4'" %}
-          <p style="color: white; background-color: gray; font-size:100%; text-align:center">
+          <p style="color: white; background-color: grey; font-size:100%; text-align:center">
           {{subway_line_code}}
-           {% elsif subway_line_code <= "'8'" %}
+           {% elsif subway_line_code <= "8" %}
           <p style="color: white; background-color: red; font-size:100%; text-align:center">
           {{subway_line_code}}
           {% else %}
