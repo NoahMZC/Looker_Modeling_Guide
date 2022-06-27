@@ -10,6 +10,11 @@ view: station_type {
   dimension: station_nm {
     type: string
     sql: ${TABLE}.station_nm ;;
+    link: {
+      label: "{{ value }} 길찾기"
+      url: "https://www.google.co.kr/maps/search/{{ value }}"
+      icon_url: "http://google.com/favicon.ico"
+    }
   }
 
   dimension: subway_line_cd {
