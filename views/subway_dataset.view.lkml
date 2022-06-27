@@ -73,7 +73,7 @@ view: subway_dataset {
   }
 
   dimension: subway_company {
-    label: "호선 명"
+    label: "사"
     group_label: "지하철 정보"
     type: string
     sql: 1;;
