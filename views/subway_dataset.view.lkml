@@ -78,13 +78,15 @@ view: subway_dataset {
     type: string
     sql: 1;;
     html:
-          {% if subway_dataset.subway_line_code <= "'4'" %}
+          {% if subway_line_code <= "'4'" %}
           <p style="color: white; background-color: gray; font-size:100%; text-align:center">
-          a
-           {% elsif subway_dataset.subway_line_code <= "'8'" %}
-          <p style="color: white; background-color: red; font-size:100%; text-align:center">b
+          {{subway_line_code}}
+           {% elsif subway_line_code <= "'8'" %}
+          <p style="color: white; background-color: red; font-size:100%; text-align:center">
+          {{subway_line_code}}
           {% else %}
-          <p style="color: white; background-color: pink; font-size:100%; text-align:center">c
+          <p style="color: white; background-color: pink; font-size:100%; text-align:center">
+          {{subway_line_code}}
           {% endif %} ;;
   }
 
