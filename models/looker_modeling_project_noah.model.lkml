@@ -10,7 +10,6 @@ access_grant: subway_dataset_access {
 
 
 explore: subway_dataset {
-  required_access_grants: [subway_dataset_access]
   label: "지하철 승하차 정보 탐색"
   join: station_type {
     type: left_outer

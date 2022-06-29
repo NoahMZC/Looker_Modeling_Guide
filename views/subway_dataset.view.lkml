@@ -56,6 +56,7 @@ view: subway_dataset {
   }
 
   dimension: subway_line_code {
+    required_access_grants:[subway_dataset_access]
     label: "호선 명"
     group_label: "지하철 정보"
     type: string
