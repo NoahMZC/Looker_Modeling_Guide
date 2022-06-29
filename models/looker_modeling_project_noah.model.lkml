@@ -62,4 +62,10 @@ datagroup: 1_hour_trigger {
   max_cache_age: "1 hour"
 }
 
+datagroup: once_a_day {
+  interval_trigger: "24 hour"
+  max_cache_age: "1 hour"
+}
+
+
 # persist_with: looker_modeling_project_noah_default_datagroup

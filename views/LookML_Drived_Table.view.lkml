@@ -1,6 +1,5 @@
 view: lookml_drived_table {
   derived_table: {
-    materialized_view: yes
     explore_source: card_dataset {
       column: dt_date {}
       column: station_nm {}
