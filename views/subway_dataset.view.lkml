@@ -55,13 +55,24 @@ view: subway_dataset {
     sql: ${TABLE}.station_cd ;;
   }
 
+
+
   dimension: subway_line_code {
-    label: "호선 명"
+    label: "{%if _user_attributes['vaild_user'] == '3' %}
+              호선 정보
+            {% else %} 지하철 호선 정보. 접근 제어된 상태입니다.
+            {% endif %}"
     group_label: "지하철 정보"
     type: string
     drill_fields: [station_code_number]
-    sql: ${TABLE}.subway_line_cd ;;
+    sql: {%if _user_attributes['vaild_user'] == '3' %}
+              ${TABLE}.subway_line_cd
+          {% else %} '[접근불가]'
+          {% endif %} ;;
   }
+
+
+
 
 
 
