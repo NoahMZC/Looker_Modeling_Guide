@@ -56,30 +56,12 @@ view: subway_dataset {
   }
 
 
-
   dimension: subway_line_code {
-    label: "{%if _user_attributes['vaild_user'] == 'Accessible' %}
-              호선 정보
-            {%elsif _user_attributes['vaild_user'] == 'General' %}
-              호선명
-            {% else %} 지하철 호선 정보. 접근 제어된 상태입니다.
-            {% endif %}"
+    label: "호선 정보"
     group_label: "지하철 정보"
     type: string
-    drill_fields: [station_code_number]
-    sql: {%if _user_attributes['vaild_user'] == 'Accessible' %}
-              ${TABLE}.subway_line_cd
-          {% elsif _user_attributes['vaild_user'] == 'General' %}
-              concat(${TABLE}.subway_line_cd,"호선")
-          {% else %}
-              '[접근불가]'
-          {% endif %};;
+    sql:  ${TABLE}.subway_line_cd ;;
   }
-
-
-
-
-
 
   filter: filter_on_subway_line_code {
     label: "지하철 호선 선택"
