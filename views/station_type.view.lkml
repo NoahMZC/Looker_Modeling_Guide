@@ -4,6 +4,7 @@ view: station_type {
 
   dimension: station_cd {
     type: string
+    primary_key: yes
     sql: ${TABLE}.station_cd ;;
   }
 

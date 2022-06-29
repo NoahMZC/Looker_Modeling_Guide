@@ -43,16 +43,6 @@ view: subway_dataset {
     sql: ${TABLE}.foot_traffic_cnt ;;
   }
 
-  dimension: getoff_passenger_cnt {
-    type: number
-    sql: ${TABLE}.getoff_passenger_cnt ;;
-  }
-
-  dimension: passenger_cnt {
-    type: number
-    sql: ${TABLE}.passenger_cnt ;;
-  }
-
   dimension: passenger_type_cd {
     type: string
     sql: ${TABLE}.passenger_type_cd ;;
@@ -69,27 +59,97 @@ view: subway_dataset {
     label: "호선 명"
     group_label: "지하철 정보"
     type: string
+    drill_fields: [station_code_number]
     sql: ${TABLE}.subway_line_cd ;;
   }
 
-  dimension: subway_company {
-    label: "사"
-    group_label: "지하철 정보"
+
+
+  filter: filter_on_subway_line_code {
+    label: "지하철 호선 선택"
     type: string
-    sql: 1;;
+    sql: {% condition filter_on_subway_line_code %} ${subway_line_code} {% endcondition %} ;;
+  }
+
+  measure: getoff_passenger_cnt {
+    label: "하차 인원수"
+    group_label: "승객 정보"
+    type: sum
+    sql: ${TABLE}.getoff_passenger_cnt ;;
+  }
+
+
+  measure: passenger_number {
+    label: "승차 인원수"
+    group_label: "승객 정보"
+    type: sum
+    sql: ${TABLE}.passenger_cnt ;;
+  }
+
+  parameter: transport_info{
+    label: "탑승 정보"
+    type:unquoted
+    allowed_value: {
+      label: "승차"
+      value: "passenger_cnt"
+    }
+    allowed_value: {
+      label: "하차"
+      value: "getoff_passenger_cnt"
+    }
+  }
+
+  measure: combine {
+    type: sum
+    sql: ${TABLE}.{% parameter transport_info %} ;;
+    value_format_name: "decimal_0"
+  }
+
+  measure: combine1 {
+    type: sum
+    sql: ${TABLE}.{% parameter transport_info %} ;;
+    value_format_name: "decimal_0"
+  }
+
+  dimension: company {
+    label: "회사"
+    type: string
+    sql: 1 ;;
     html:
-          {% if subway_line_code <= "'4'" %}
-          <p style="color: white; background-color: grey; font-size:100%; text-align:center">
-          {{subway_line_code}}
-           {% elsif subway_line_code <= "8" %}
-          <p style="color: white; background-color: red; font-size:100%; text-align:center">
-          {{subway_line_code}}
+          <!-- 1,2,3,4호선일 경우 서울 매트로 이미지 출력-->
+          {% if subway_dataset.subway_line_code._value <= '4' %}
+            <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Seoul_Metro_Logo.svg/1280px-Seoul_Metro_Logo.svg.png"
+                         height=30 width=30></p>
+
+          <!-- 5,6,7,8호선일 경우 서울 도시철도 이미지 출력-->
+          {% elsif subway_dataset.subway_line_code._value <= '8' %}
+            <p><img src="http://kmug.co.kr/data/file/design/data_logo_1276568275_1.jpg"
+                         height=30 width=30></p>
+
+          <!-- 그 외의 경우 '[데이터 없음]' 출력-->
           {% else %}
-          <p style="color: white; background-color: pink; font-size:100%; text-align:center">
-          {{subway_line_code}}
+            [데이터 없음]
+
           {% endif %} ;;
   }
 
+
+  # dimension: subway_company {
+  #   label: "사"
+  #   group_label: "지하철 정보"
+  #   type: string
+  #   sql: 1;;
+  #   html:
+  #         {% if subway_dataset.subway_line_code._value <= '4' %}
+  #           <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Seoul_Metro_Logo.svg/
+  #                       1280px-Seoul_Metro_Logo.svg.png" height=100 width=100></p>
+  #         {% elsif subway_dataset.subway_line_code._value <= '8' %}
+  #           <p><img src="http://kmug.co.kr/data/file/design/data_logo_1276568275_1.jpg"
+  #                       height=100 width=100></p>
+  #         {% else %}
+  #         [데이터 없음]
+  #         {% endif %} ;;
+  # }
 
   dimension: html_example {
     type: string
